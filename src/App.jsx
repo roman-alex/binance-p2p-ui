@@ -52,7 +52,6 @@ function App() {
     }
   };
 
-  // Автоматичний пошук при першому завантаженні
   useEffect(() => {
     handleSearch();
   }, []);
@@ -81,14 +80,12 @@ function App() {
     <div className="min-h-screen bg-dark-bg">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        {/* Фільтри */}
         <FilterBar
           filters={filters}
           onFiltersChange={handleFiltersChange}
           onSearch={handleSearch}
         />
 
-        {/* Помилка */}
         {error && (
           <div className="bg-red-900/20 border border-red-500 rounded-lg p-4 mb-6">
             <div className="flex items-center">
@@ -103,7 +100,6 @@ function App() {
           </div>
         )}
 
-        {/* Таблиця оголошень */}
         <AdsTable
           ads={ads}
           loading={loading}
