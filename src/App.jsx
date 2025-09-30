@@ -7,7 +7,7 @@ function App() {
   const [ads, setAds] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [refreshEverySec, setRefreshEverySec] = useState(10);
+  const [refreshEverySec, setRefreshEverySec] = useState(8);
   const [isAutoRefreshing, setIsAutoRefreshing] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(10);
   const [lastUpdated, setLastUpdated] = useState(null);
@@ -15,7 +15,7 @@ function App() {
     asset: 'USDT',
     fiat: 'UAH',
     tradeType: 'BUY',
-    payTypes: ['Monobank', 'PrivatBank'],
+    payTypes: [],
     amountMin: null,
     amountMax: null,
     rows: 20,
