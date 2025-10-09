@@ -20,11 +20,44 @@ function App() {
     amountMax: null,
     rows: 20,
     merchantOnly: false,
-    sortBy: 'price'
+    sortBy: 'price',
+    priceAlert: null
   });
 
   const handleFiltersChange = (newFilters) => {
     setFilters(newFilters);
+  };
+
+  const playNotificationSound = () => {
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+      oscillator.frequency.setValueAtTime(600, audioContext.currentTime + 0.1);
+      oscillator.frequency.setValueAtTime(800, audioContext.currentTime + 0.2);
+      
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.3);
+    } catch (error) {
+      console.log('Audio notification failed:', error);
+    }
+  };
+
+  const checkPriceAlert = (newAds) => {
+    if (!filters.priceAlert || !newAds.length) return;
+    
+    const matchingAds = newAds.filter(ad => ad.price <= filters.priceAlert);
+    if (matchingAds.length > 0) {
+      playNotificationSound();
+    }
   };
 
   const handleSearch = async () => {
@@ -44,6 +77,7 @@ function App() {
       const results = await fetchP2POrders(normalized);
       setAds(results);
       setLastUpdated(new Date());
+      checkPriceAlert(results);
     } catch (err) {
       setError(err.message || 'Помилка завантаження даних');
       setAds([]);

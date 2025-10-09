@@ -103,6 +103,17 @@ const FilterBar = ({ filters, onFiltersChange, onSearch }) => {
             <option value={20}>20</option>
           </select>
         </div>
+
+        <div>
+          <label className="block text-sm text-gray-400 mb-1">Ціна сповіщення</label>
+          <input
+            type="number"
+            placeholder="₴"
+            value={filters.priceAlert || ''}
+            onChange={(e) => handleInputChange('priceAlert', e.target.value ? Number(e.target.value) : null)}
+            className="input-field w-24"
+          />
+        </div>
         <button
           onClick={handleSearch}
           className="btn-primary"
